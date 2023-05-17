@@ -1,5 +1,15 @@
+from datacenter.models import models
+
 from datacenter.models import Schoolkid, Lesson, Commendation
 
+
+class HackError(Exception):
+	def __init__(self, message):
+		self.message = message
+
+
+
+class Hack
 
 def fix_marks(schoolkid):
 	bad_marks = schoolkid.mark_set.filter(points__in=[2, 3])
@@ -17,7 +27,13 @@ def create_commendation(
 		subject_name='Математика',
 		achievement='вааай красавчик'
 ):
-	student = Schoolkid.objects.get(full_name__contains=fio)
+	if fio == '':
+		raise HackError('Пустое имя')
+	try:
+		student = Schoolkid.objects.get(full_name__contains=fio)
+	except models.ObjectDoesNotExist:
+		raise HackError('По указаному имени не найдено учеников')
+
 	lesson = Lesson.objects.filter(
 		subject__title=subject_name,
 		year_of_study=student.year_of_study,

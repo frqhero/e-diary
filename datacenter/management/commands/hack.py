@@ -4,38 +4,43 @@ from datacenter.models import Schoolkid
 from scripts import fix_marks, remove_chastisements, create_commendation
 
 
-def first_case():
-    fio = 'Фролов Иван'
-    subject = 'Математика'
-    student = Schoolkid.objects.get(full_name__contains=fio)
-    fix_marks(student)
-    remove_chastisements(student)
-    create_commendation(fio, subject)
-
-
-def second_case(friend_fio):
-    subject = 'Математика'
-    student = Schoolkid.objects.get(full_name__contains=friend_fio)
-    fix_marks(student)
-    remove_chastisements(student)
-    create_commendation(friend_fio, subject)
-
-
-def third_case(achievement, subject_name):
-
-
 
 class Command(BaseCommand):
 
+    @staticmethod
+    def _first_case():
+        fio = 'Фролов Иван'
+        subject = 'Математика'
+        student = Schoolkid.objects.get(full_name__contains=fio)
+        fix_marks(student)
+        remove_chastisements(student)
+        create_commendation(fio, subject)
+
+    @staticmethod
+    def _second_case(friend_fio):
+        student = Schoolkid.objects.get(full_name__contains=friend_fio)
+        subject = 'Математика'
+        fix_marks(student)
+        remove_chastisements(student)
+        create_commendation(friend_fio, subject)
+
+    @staticmethod
+    def _third_case(fio, subject_name, achievement):
+        student = Schoolkid.objects.get(full_name__contains=fio)
+        fix_marks(student)
+        remove_chastisements(student)
+        create_commendation(fio, subject_name, achievement)
+
     def handle(self, *args, **options):
-        first_case()
+        # self._first_case()
+        #
+        # friend_fio = 'Баранова Евфросиния'
+        # self._second_case(friend_fio)
+        #
+        # fio = 'Белозеров Авдей'
+        # achievement = 'лучший'
+        # subject_name = 'Музыка'
+        # self._third_case(fio, subject_name, achievement)
 
-        friend_fio = 'Баранова Евфросиния'
-        second_case(friend_fio)
-
-        fio = 'Белозеров Авдей'
-        achievement = 'лучший'
-        subject_name = 'Математика'
-        third_case(fio, achievement, subject_name)
-
-
+        fio = ''
+        create_commendation(fio)

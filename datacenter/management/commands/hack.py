@@ -1,7 +1,6 @@
 from django.core.management.base import BaseCommand
 
-from datacenter.models import Schoolkid
-from scripts import fix_marks, remove_chastisements, create_commendation
+from scripts import Hack
 
 
 
@@ -9,38 +8,43 @@ class Command(BaseCommand):
 
     @staticmethod
     def _first_case():
-        fio = 'Фролов Иван'
-        subject = 'Математика'
-        student = Schoolkid.objects.get(full_name__contains=fio)
-        fix_marks(student)
-        remove_chastisements(student)
-        create_commendation(fio, subject)
+        hack_1 = Hack()
+        hack_1.carry_out_all_features()
 
     @staticmethod
-    def _second_case(friend_fio):
-        student = Schoolkid.objects.get(full_name__contains=friend_fio)
-        subject = 'Математика'
-        fix_marks(student)
-        remove_chastisements(student)
-        create_commendation(friend_fio, subject)
+    def _second_case():
+        friend_fio = 'Баранова Евфросиния'
+        hack_2 = Hack(friend_fio)
+        hack_2.carry_out_all_features()
 
     @staticmethod
-    def _third_case(fio, subject_name, achievement):
-        student = Schoolkid.objects.get(full_name__contains=fio)
-        fix_marks(student)
-        remove_chastisements(student)
-        create_commendation(fio, subject_name, achievement)
+    def _third_case():
+        fio = 'Белозеров Авдей'
+        subject_name = 'Музыка'
+        achievement = 'лучший'
+        hack_3 = Hack(fio, subject_name, achievement)
+        hack_3.carry_out_all_features()
+
+    @staticmethod
+    def _fourth_case():
+        fio = 'Симён'
+        hack4 = Hack(fio)
+        hack4.carry_out_all_features()
+
+    def _fourth_one_case(self):
+        fio = ''
+        hack41 = Hack(fio)
+        hack41.carry_out_all_features()
+
+    def _fourth_two_case(self):
+        subject_name = 'матиматика'
+        hack41 = Hack(subject_name=subject_name)
+        hack41.carry_out_all_features()
 
     def handle(self, *args, **options):
-        # self._first_case()
-        #
-        # friend_fio = 'Баранова Евфросиния'
-        # self._second_case(friend_fio)
-        #
-        # fio = 'Белозеров Авдей'
-        # achievement = 'лучший'
-        # subject_name = 'Музыка'
-        # self._third_case(fio, subject_name, achievement)
-
-        fio = ''
-        create_commendation(fio)
+        self._first_case()
+        self._second_case()
+        self._third_case()
+        self._fourth_case()
+        self._fourth_one_case()
+        self._fourth_two_case()

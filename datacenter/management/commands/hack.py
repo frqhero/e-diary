@@ -3,7 +3,6 @@ from django.core.management.base import BaseCommand
 from scripts import Hack
 
 
-
 class Command(BaseCommand):
 
     @staticmethod
@@ -31,11 +30,13 @@ class Command(BaseCommand):
         hack4 = Hack(fio)
         hack4.carry_out_all_features()
 
+    @staticmethod
     def _fourth_one_case(self):
         fio = ''
         hack41 = Hack(fio)
         hack41.carry_out_all_features()
 
+    @staticmethod
     def _fourth_two_case(self):
         subject_name = 'матиматика'
         hack41 = Hack(subject_name=subject_name)
